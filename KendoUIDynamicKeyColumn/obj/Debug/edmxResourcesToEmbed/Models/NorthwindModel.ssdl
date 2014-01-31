@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NorthwindModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="OrderLineItems">
+    <Key>
+      <PropertyRef Name="OrderLineItemID" />
+    </Key>
+    <Property Name="OrderLineItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Quanitity" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="ShipperID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="SupplierID" Type="int" />
+    <Property Name="CategoryID" Type="int" />
+    <Property Name="QuantityPerUnit" Type="nvarchar" MaxLength="20" />
+    <Property Name="UnitPrice" Type="float" />
+    <Property Name="UnitsInStock" Type="int" />
+    <Property Name="UnitsOnOrder" Type="int" />
+    <Property Name="ReorderLevel" Type="int" />
+    <Property Name="Discontinued" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductShipper">
+    <Key>
+      <PropertyRef Name="ProductShipper" />
+    </Key>
+    <Property Name="ProductShipper" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="ShipperID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shippers">
+    <Key>
+      <PropertyRef Name="ShipperID" />
+    </Key>
+    <Property Name="ShipperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="24" />
+  </EntityType>
+  <Association Name="FK_OrderLineItems_OrderLineItems">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="OrderLineItems" Type="Self.OrderLineItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderLineItems">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderLineItems_Shippers">
+    <End Role="Shippers" Type="Self.Shippers" Multiplicity="1" />
+    <End Role="OrderLineItems" Type="Self.OrderLineItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shippers">
+        <PropertyRef Name="ShipperID" />
+      </Principal>
+      <Dependent Role="OrderLineItems">
+        <PropertyRef Name="ShipperID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductShipper_ProductID">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductShipper" Type="Self.ProductShipper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductShipper">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductShipper_ShipperID">
+    <End Role="Shippers" Type="Self.Shippers" Multiplicity="1" />
+    <End Role="ProductShipper" Type="Self.ProductShipper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shippers">
+        <PropertyRef Name="ShipperID" />
+      </Principal>
+      <Dependent Role="ProductShipper">
+        <PropertyRef Name="ShipperID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NorthwindModelStoreContainer">
+    <EntitySet Name="OrderLineItems" EntityType="Self.OrderLineItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductShipper" EntityType="Self.ProductShipper" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shippers" EntityType="Self.Shippers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OrderLineItems_OrderLineItems" Association="Self.FK_OrderLineItems_OrderLineItems">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderLineItems_Shippers" Association="Self.FK_OrderLineItems_Shippers">
+      <End Role="Shippers" EntitySet="Shippers" />
+      <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductShipper_ProductID" Association="Self.FK_ProductShipper_ProductID">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductShipper" EntitySet="ProductShipper" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductShipper_ShipperID" Association="Self.FK_ProductShipper_ShipperID">
+      <End Role="Shippers" EntitySet="Shippers" />
+      <End Role="ProductShipper" EntitySet="ProductShipper" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

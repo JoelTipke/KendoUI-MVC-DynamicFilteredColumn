@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NorthwindModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OrderLineItems">
+          <Key>
+            <PropertyRef Name="OrderLineItemID" />
+          </Key>
+          <Property Name="OrderLineItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Quanitity" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ShipperID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="QuantityPerUnit" Type="nvarchar" MaxLength="20" />
+          <Property Name="UnitPrice" Type="float" />
+          <Property Name="UnitsInStock" Type="int" />
+          <Property Name="UnitsOnOrder" Type="int" />
+          <Property Name="ReorderLevel" Type="int" />
+          <Property Name="Discontinued" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductShipper">
+          <Key>
+            <PropertyRef Name="ProductShipper" />
+          </Key>
+          <Property Name="ProductShipper" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ShipperID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shippers">
+          <Key>
+            <PropertyRef Name="ShipperID" />
+          </Key>
+          <Property Name="ShipperID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="24" />
+        </EntityType>
+        <Association Name="FK_OrderLineItems_OrderLineItems">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderLineItems" Type="Self.OrderLineItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderLineItems">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLineItems_Shippers">
+          <End Role="Shippers" Type="Self.Shippers" Multiplicity="1" />
+          <End Role="OrderLineItems" Type="Self.OrderLineItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shippers">
+              <PropertyRef Name="ShipperID" />
+            </Principal>
+            <Dependent Role="OrderLineItems">
+              <PropertyRef Name="ShipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductShipper_ProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductShipper" Type="Self.ProductShipper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductShipper">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductShipper_ShipperID">
+          <End Role="Shippers" Type="Self.Shippers" Multiplicity="1" />
+          <End Role="ProductShipper" Type="Self.ProductShipper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shippers">
+              <PropertyRef Name="ShipperID" />
+            </Principal>
+            <Dependent Role="ProductShipper">
+              <PropertyRef Name="ShipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NorthwindModelStoreContainer">
+          <EntitySet Name="OrderLineItems" EntityType="Self.OrderLineItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductShipper" EntityType="Self.ProductShipper" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shippers" EntityType="Self.Shippers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OrderLineItems_OrderLineItems" Association="Self.FK_OrderLineItems_OrderLineItems">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLineItems_Shippers" Association="Self.FK_OrderLineItems_Shippers">
+            <End Role="Shippers" EntitySet="Shippers" />
+            <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductShipper_ProductID" Association="Self.FK_ProductShipper_ProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductShipper" EntitySet="ProductShipper" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductShipper_ShipperID" Association="Self.FK_ProductShipper_ShipperID">
+            <End Role="Shippers" EntitySet="Shippers" />
+            <End Role="ProductShipper" EntitySet="ProductShipper" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NorthwindModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="OrderLineItem">
+          <Key>
+            <PropertyRef Name="OrderLineItemID" />
+          </Key>
+          <Property Name="OrderLineItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quanitity" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ShipperID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_OrderLineItems_OrderLineItems" FromRole="OrderLineItems" ToRole="Products" />
+          <NavigationProperty Name="Shipper" Relationship="Self.FK_OrderLineItems_Shippers" FromRole="OrderLineItems" ToRole="Shippers" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="QuantityPerUnit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Double" />
+          <Property Name="UnitsInStock" Type="Int32" />
+          <Property Name="UnitsOnOrder" Type="Int32" />
+          <Property Name="ReorderLevel" Type="Int32" />
+          <Property Name="Discontinued" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrderLineItems" Relationship="Self.FK_OrderLineItems_OrderLineItems" FromRole="Products" ToRole="OrderLineItems" />
+          <NavigationProperty Name="ProductShippers" Relationship="NorthwindModel.FK_ProductShipper_ProductID" FromRole="Product" ToRole="ProductShipper" />
+        </EntityType>
+        <EntityType Name="ProductShipper">
+          <Key>
+            <PropertyRef Name="ProductShipper1" />
+          </Key>
+          <Property Name="ProductShipper1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ShipperID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductShipper11" Relationship="Self.FK_ProductShipper_ProductShipper" FromRole="ProductShipper" ToRole="ProductShipper1" />
+          <NavigationProperty Name="ProductShipper2" Relationship="Self.FK_ProductShipper_ProductShipper" FromRole="ProductShipper1" ToRole="ProductShipper" />
+          <NavigationProperty Name="Product" Relationship="NorthwindModel.FK_ProductShipper_ProductID" FromRole="ProductShipper" ToRole="Product" />
+          <NavigationProperty Name="Shipper" Relationship="NorthwindModel.FK_ProductShipper_ShipperID" FromRole="ProductShipper" ToRole="Shipper" />
+        </EntityType>
+        <EntityType Name="Shipper">
+          <Key>
+            <PropertyRef Name="ShipperID" />
+          </Key>
+          <Property Name="ShipperID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderLineItems" Relationship="Self.FK_OrderLineItems_Shippers" FromRole="Shippers" ToRole="OrderLineItems" />
+          <NavigationProperty Name="ProductShippers" Relationship="NorthwindModel.FK_ProductShipper_ShipperID" FromRole="Shipper" ToRole="ProductShipper" />
+        </EntityType>
+        <Association Name="FK_OrderLineItems_OrderLineItems">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderLineItems" Type="Self.OrderLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderLineItems">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLineItems_Shippers">
+          <End Role="Shippers" Type="Self.Shipper" Multiplicity="1" />
+          <End Role="OrderLineItems" Type="Self.OrderLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shippers">
+              <PropertyRef Name="ShipperID" />
+            </Principal>
+            <Dependent Role="OrderLineItems">
+              <PropertyRef Name="ShipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductShipper_ProductShipper">
+          <End Role="ProductShipper" Type="Self.ProductShipper" Multiplicity="1" />
+          <End Role="ProductShipper1" Type="Self.ProductShipper" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProductShipper">
+              <PropertyRef Name="ProductShipper1" />
+            </Principal>
+            <Dependent Role="ProductShipper1">
+              <PropertyRef Name="ProductShipper1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NorthwindEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderLineItems" EntityType="Self.OrderLineItem" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductShippers" EntityType="Self.ProductShipper" />
+          <EntitySet Name="Shippers" EntityType="Self.Shipper" />
+          <AssociationSet Name="FK_OrderLineItems_OrderLineItems" Association="Self.FK_OrderLineItems_OrderLineItems">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLineItems_Shippers" Association="Self.FK_OrderLineItems_Shippers">
+            <End Role="Shippers" EntitySet="Shippers" />
+            <End Role="OrderLineItems" EntitySet="OrderLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductShipper_ProductShipper" Association="Self.FK_ProductShipper_ProductShipper">
+            <End Role="ProductShipper" EntitySet="ProductShippers" />
+            <End Role="ProductShipper1" EntitySet="ProductShippers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductShipper_ProductID" Association="NorthwindModel.FK_ProductShipper_ProductID">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductShipper" EntitySet="ProductShippers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductShipper_ShipperID" Association="NorthwindModel.FK_ProductShipper_ShipperID">
+            <End Role="Shipper" EntitySet="Shippers" />
+            <End Role="ProductShipper" EntitySet="ProductShippers" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_ProductShipper_ProductID">
+          <End Type="NorthwindModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="NorthwindModel.ProductShipper" Role="ProductShipper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductShipper">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductShipper_ShipperID">
+          <End Type="NorthwindModel.Shipper" Role="Shipper" Multiplicity="1" />
+          <End Type="NorthwindModel.ProductShipper" Role="ProductShipper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipper">
+              <PropertyRef Name="ShipperID" />
+            </Principal>
+            <Dependent Role="ProductShipper">
+              <PropertyRef Name="ShipperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NorthwindModelStoreContainer" CdmEntityContainer="NorthwindEntities">
+          <EntitySetMapping Name="OrderLineItems">
+            <EntityTypeMapping TypeName="NorthwindModel.OrderLineItem">
+              <MappingFragment StoreEntitySet="OrderLineItems">
+                <ScalarProperty Name="OrderLineItemID" ColumnName="OrderLineItemID" />
+                <ScalarProperty Name="Quanitity" ColumnName="Quanitity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="NorthwindModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="QuantityPerUnit" ColumnName="QuantityPerUnit" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="UnitsInStock" ColumnName="UnitsInStock" />
+                <ScalarProperty Name="UnitsOnOrder" ColumnName="UnitsOnOrder" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="Discontinued" ColumnName="Discontinued" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductShippers">
+            <EntityTypeMapping TypeName="NorthwindModel.ProductShipper">
+              <MappingFragment StoreEntitySet="ProductShipper">
+                <ScalarProperty Name="ProductShipper1" ColumnName="ProductShipper" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shippers">
+            <EntityTypeMapping TypeName="NorthwindModel.Shipper">
+              <MappingFragment StoreEntitySet="Shippers">
+                <ScalarProperty Name="ShipperID" ColumnName="ShipperID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

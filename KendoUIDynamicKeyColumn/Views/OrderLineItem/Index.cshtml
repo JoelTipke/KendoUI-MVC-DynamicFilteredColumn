@@ -1,0 +1,34 @@
+﻿@using System.Collections
+@using System.Collections.Specialized
+@using KendoUIDynamicKeyColumn.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>FK Sample</h2>
+
+@(Html.Kendo().Grid<OrderLineItem>()
+                .Name("Orders")
+                .Columns(columns =>
+                {
+                    columns.Bound(o => o.OrderLineItemID);
+
+                    columns.ForeignKey(o => o.ProductID, (IEnumerable) ViewData["AllProducts"], "ProductID", "ProductName");
+                    columns.ForeignKey(o => o.ShipperID, (IEnumerable) ViewData["AllShippers"], "ShipperID", "CompanyName")
+                    .EditorTemplateName("ShippersGridEditor");
+ 
+
+                })
+                .Filterable(f => f.Enabled(true))
+                .Sortable()
+                .Scrollable(s => s.Height(400))
+                .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(20)
+                            .Read(read => read.Action("OrdersRead", "OrderLineItem"))
+                            .Model(model => model.Id(o => o.OrderLineItemID))
+                )
+                .Editable(editmode => editmode.Mode(GridEditMode.InCell))
+
+)
+
