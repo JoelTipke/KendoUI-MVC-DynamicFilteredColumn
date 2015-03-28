@@ -4,8 +4,8 @@
 
 <script>
     function getParentId() {
-        var row = $(event.srcElement).closest("tr");
-        var grid = $(event.srcElement).closest("[data-role=grid]").data("kendoGrid");
+        var row = $("#ShipperID").closest("tr");
+        var grid = $("#ShipperID").closest("[data-role=grid]").data("kendoGrid");
         var dataItem = grid.dataItem(row);
         return { ProductID: dataItem.ProductID };
     }
